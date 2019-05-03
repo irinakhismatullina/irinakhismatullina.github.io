@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Personal code review assistants and Machine Learning on Source Code</title>
+	<title>Typos correction in code identifiers</title>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@irineekh" />
     <meta name="twitter:label1" content="Number of slides" />
-    <meta name="twitter:data1" content="55" />
+    <meta name="twitter:data1" content="52" />
     <meta name="twitter:label2" content="Where and when" />
     <meta name="twitter:data2" content="04.05.2019, Vienna, Austria" />
     <meta property="og:type" content="article" />
@@ -214,7 +214,7 @@
     </style>
 
 	<section class="slide vista vista-cover" id="cover">
-		<h2 style="color: red">COVER Typos Correction Inside Code Identifiers</h2>
+		<h2>Typos correction in code identifiers</h2>
 		<p class="black">Irina Khismatullina</p>
         <p class="black"><a href="https://sourced.tech">source{d}</a><br>#MLonCode</p>
 		<style>
@@ -414,6 +414,17 @@
         </ul>
     </section>
 
+    <section class="slide" id="stages_1">
+        <h2>Stages of development</h2>
+        <ol>
+            <li>Writing code - <span style="color: deepskyblue">developer & IDE</span></li>
+            <li>Running, fixing code locally - <span style="color: deepskyblue">developer & IDE & tools</span></li>
+            <li>Creating a PR to add code to the project's repository - <span style="color: deepskyblue">automatic checks</span></li>
+            <li>Code review - <span style="color: deepskyblue">colleagues, teachers, team leads</span></li>
+            <li>Merging new code with the whole project code</li>
+        </ol>
+    </section>
+
     <section class="slide">
         <img src="pictures/typos_issues.png" id="issues">
         <style>
@@ -428,18 +439,6 @@
                 object-fit: contain;
         }
         </style>
-
-    </section>
-
-    <section class="slide" id="stages_1">
-        <h2>Stages of development</h2>
-        <ol>
-            <li>Writing code - <span style="color: deepskyblue">developer & IDE</span></li>
-            <li>Running, fixing code locally - <span style="color: deepskyblue">developer & IDE & tools</span></li>
-            <li>Creating a PR to add code to the project's repository - <span style="color: deepskyblue">automatic checks</span></li>
-            <li>Code review - <span style="color: deepskyblue">colleagues, teachers, team leads</span></li>
-            <li>Merging new code with the whole project code</li>
-        </ol>
     </section>
 
     <section class="slide">
@@ -492,7 +491,7 @@
             <li>Two methods: <code><span style="color: #ffc66d">train</span>()</code> and <code><span style="color: #ffc66d">analyze</span>()</code></li>
             <li>Trained on the analyzed project repo</li>
             <li>Can be pretrained on a big collection of code</li>
-            <li>Can be run on a server, therefore allows for *complex ML models*</li>
+            <li>Can be run on a server, therefore allows for <span style="color: orange">*complex ML models*</span></li>
         </ul>
     </section>
 
@@ -589,7 +588,28 @@
     </section>
 
     <section class="slide">
-        <h2>The pipeline</h2>
+        <h2>Vocabulary</h2>
+        <ol>
+            <li>Universal vocabulary is derived from the dataset of identifiers:
+        <ul>
+            <li>Contains most frequent tokens</li>
+            <li>Contains English words that were present in the dataset</li>
+            <li>Simple filtering based on edit distances between the tokens and their frequencies</li>
+        </ul></li>
+            <li>All identifiers' tokens, present in the project during training, are added to the vocabulary</li>
+        </ol>
+    </section>
+
+    <section class="slide">
+        <h2>Detection</h2>
+        <ul>
+            <li>Only new identifiers are checked</li>
+            <li>All tokens from the new identifiers are checked (even if they are inside the vocabulary)</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>The correction pipeline</h2>
         <img src="pictures/typos_analyzer.png" id="typos_analyzer">
         <style>
             #typos_analyzer {
@@ -607,27 +627,6 @@
             <li>Train <a href="">Fasttext</a> model on a big sample (~100mln) from the identifiers dataset (frequencies distribution is maintained the same)</li>
             <li>Fastext model allows for embeddings calculation for tokens, unseen during training</li>
             <li>Use token embeddings for candidates ranking (for features generation)</li>
-        </ul>
-    </section>
-
-    <section class="slide">
-        <h2>TyposCorrector vocabulary</h2>
-        <ol>
-            <li>Universal vocabulary is derived from the dataset of identifiers:
-        <ul>
-            <li>Contains most frequent tokens</li>
-            <li>Contains English words that were present in the dataset</li>
-            <li>Simple filtering based on edit distances between the tokens and theirnfrequencies</li>
-        </ul></li>
-            <li>All identifiers' tokens, present in the project during training, are added to the vocabulary</li>
-        </ol>
-    </section>
-
-    <section class="slide">
-        <h2>Detection</h2>
-        <ul>
-            <li>Only new identifiers are checked</li>
-            <li>All tokens from the new identifiers are checked (even if they are inside the vocabulary)</li>
         </ul>
     </section>
 
@@ -727,11 +726,7 @@
     </section>
 
     <section class="slide">
-        <h2 class="shout shout-small">We need something simpler</h2>
-    </section>
-
-    <section class="slide">
-        <h2 style="color: red">Cool DL pic</h2>
+        <h2 class="shout shout-small">We need something <span style="color: orange">simpler</span></h2>
     </section>
 
     <section class="slide vista" id="dl">
@@ -769,36 +764,13 @@
     </section>
 
 	<section class="slide">
-        <h2 class="thank-you" style="color: red">Thank you</h2>
+        <h2 class="thank-you">Thank you!</h2>
         <ul class="no-bullets fa-bullets">
             <li><i class="fa fa-envelope monofa" aria-hidden="true"></i><a href="mailto://irina@sourced.tech">irina@sourced.tech</a></li>
             <li><i class="fa fa-github monofa" aria-hidden="true"></i><a href="https://github.com/src-d/lookout">lookout</a></li>
             <li><i class="fa fa-github monofa" aria-hidden="true"></i><a href="https://github.com/src-d/style-analyzer">style-analyzer with typos correction</a></li>
             <li><i class="fa fa-rss monofa" aria-hidden="true"></i><a href="https://blog.sourced.tech">blog.sourced.tech</a></li>
         </ul>
-<!--        <div id="qrcode-container">-->
-<!--            <img class="qrcode black" src="pictures/qrcode_black.svg">-->
-<!--            <img class="qrcode white" src="pictures/qrcode_white.svg">-->
-<!--            <a href="http://bit.ly/2Iv8nBC" id="bitly">bit.ly/2Iv8nBC</a>-->
-<!--        </div>-->
-<!--        <style>-->
-<!--            #qrcode-container {-->
-<!--                display: flex;-->
-<!--                flex-direction: column;-->
-<!--                align-items: center;-->
-<!--                width: 380px;-->
-<!--                position: absolute;-->
-<!--                right: 81px;-->
-<!--                top: 81px;-->
-<!--            }-->
-<!--            .qrcode {-->
-<!--                height: 380px;-->
-<!--            }-->
-<!--            #bitly {-->
-<!--                display: block;-->
-<!--                font-size: 120%;-->
-<!--            }-->
-<!--        </style>-->
     </section>
 
 	<div class="progress"></div>
